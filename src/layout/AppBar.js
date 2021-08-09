@@ -7,8 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import EndavaLogo from '../assets/img/endava-white.png'
-
-
+import { useHistory } from 'react-router-dom';
+import {NavLink, withRouter}  from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -55,8 +55,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TopBar = props =>{
+const TopBar = (props) =>{
+    let history = useHistory();
     const classes = useStyles();
+    
     return(
         <div className={classes.root}>
           <AppBar position="static">
@@ -78,8 +80,10 @@ const TopBar = props =>{
               </div>
                     
               <div className={classes.titleMenu}>
-                <Button className={classes.buttonTop}>Points</Button>  
-                <Button className={classes.buttonTop}>Shop</Button>  
+
+                <Button className={classes.buttonTop} onClick={ () => history.push("/home")}>Points</Button>  
+                <NavLink to="/home" >HomeLink</NavLink>
+                <Button className={classes.buttonTop} onClick={ () => history.push("/shop")}>Shop</Button>  
                 <Button className={classes.buttonTop}>Events</Button>  
                 <Button className={classes.buttonTop}>Add points</Button> 
               </div> 
