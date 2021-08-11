@@ -1,51 +1,94 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/styles";
-import {Typography, Button} from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import TablePoints from "../components/TablePoints";
+import TableEventsHistory from "../components/TableEventsHistory";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import { Typography, Button, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        maxHeight: 440,
-        display: "flex",
-        alignItems: 'center',
-    },
+  container: {
+    maxHeight: 440,
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "center",
+    display: "flex",
+  },
+  contentBody: {
+    width: "50%",
+  },
+  title: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
 }));
-const Home = props => {
-    const classes = useStyles();
-    const columns = [        
-         {
-            field: 'name',
-            headerName: 'Name',
-            width: 300,
-          },
-          {
-            field: 'points',
-            headerName: 'Points',
-            width: 150,
-          },
-      ];
-      
-      const rows = [
-        { id: 1, name: 'Jhondoe 1', points: 3000},
-        { id: 2, name: 'Jhondoe 2', points: 5400},
-        { id: 3, name: 'Jhondoe 3', points: 4800},
-        { id: 4, name: 'Jhondoe 4', points: 1000},
-        { id: 5, name: 'Jhondoe 5', points: 2200},
-        { id: 6, name: 'Jhondoe 6', points: 3500},
-      ];
-    
-    return(
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-        <div id="table-points-container" className={classes.container} style={{ height: 400, width: '50%' }}>
-            <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={6}
-            checkboxSelection
-            disableSelectionOnClick
-            />
-        </div>
-    );
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
 }
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+}
+const Home = (props) => {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={classes.container}>
+      <Tabs
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+        className={classes.tabs}
+      >
+        <Tab label="Points" {...a11yProps(0)} />
+        <Tab label="Events History" {...a11yProps(1)} />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <TablePoints />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <TableEventsHistory />
+      </TabPanel>
+    </div>
+  );
+};
 
 export default Home;

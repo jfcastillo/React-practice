@@ -3,7 +3,7 @@ import { Route, Switch} from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import Home from "./pages/Home.js";
 import Shop from "./pages/Shop.js";
-import RouteWithLayout from "./components/RouteWithLayout";
+import RouteWithLayout from "./layout/RouteWithLayout";
 import AppBar from "./layout/AppBar";
 
 export default(
