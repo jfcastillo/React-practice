@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import TablePoints from "../components/TablePoints";
@@ -6,7 +6,7 @@ import TableEventsHistory from "../components/TableEventsHistory";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Typography, Button, Box } from "@material-ui/core";
-
+import { NavLink, withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxHeight: 440,
@@ -91,4 +91,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default withRouter(Home);

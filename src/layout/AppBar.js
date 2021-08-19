@@ -12,12 +12,14 @@ import { NavLink, withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    display: "flex",
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   toolbar: {
     minHeight: 80,
+    width: "auto",
     alignItems: "flex-start",
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
@@ -57,6 +59,10 @@ const TopBar = (props) => {
   let history = useHistory();
   const classes = useStyles();
 
+  const clickHome = () => {
+    history.push("/home");
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -74,10 +80,7 @@ const TopBar = (props) => {
           </div>
 
           <div className={classes.titleMenu}>
-            <Button
-              className={classes.buttonTop}
-              onClick={() => history.push("/home")}
-            >
+            <Button className={classes.buttonTop} onClick={clickHome}>
               Points
             </Button>
             <Button
@@ -103,4 +106,4 @@ const TopBar = (props) => {
     </div>
   );
 };
-export default TopBar;
+export default withRouter(TopBar);
